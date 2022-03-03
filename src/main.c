@@ -38,6 +38,12 @@ int main(){
     processes[2] = newProcess(0, 4, 3, IO_TYPE_PRINTER);
 
     start();
+    
+    //Monta tabela com resultados obtidos
+    for(int i = 0; i < NUMBER_OF_PROCESSES; i++){
+       printf("\nProcesso [#%d] Tempo Chegada: %d Tempo Servico: %d Final Processo: %d TAT: %d Tempo de Espera: %d", i, processes[i]->arrivalTime, processes[i]->ioStartTime, processes[i]->endTime, processes[i]->turnaroundTime, processes[i]->waitingTime);
+    }
+    printf("\n\n");
 
     return 0;
 }
@@ -136,6 +142,9 @@ void runExecutingProcess(){
         executingProcess->status = STATUS_TERMINATED;
         hasExecutingProcess = FALSE;
         printf("[t = %d] Process with PID %d has terminated.\n", t+1, executingProcess->pid);
+        executingProcess->turnaroundTime = t + 1 - executingProcess->arrivalTime; 
+        executingProcess->waitingTime = t + 1 - executingProcess->arrivalTime - executingProcess->ioStartTime;
+        executingProcess->endTime = t + 1;
     }
     else if(executingProcess->quantumRemaining == 0){
         executingProcess->status = STATUS_READY;
