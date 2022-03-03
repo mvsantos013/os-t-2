@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "constants.c"
 #include "process.c"
 #include "queue.c"
@@ -25,6 +26,8 @@ int hasActiveProcesses();
 void start();
 
 int main(){
+    srand(time(NULL));
+
     // Cria filas.
     highPriorityQueue = newQueue();
     lowPriorityQueue = newQueue();
@@ -38,9 +41,9 @@ int main(){
         // Intervalo [0, MAX_ARRIVAL_TIME]
         int randomArrivalTime = rand() % MAX_ARRIVAL_TIME;
         // Intervalo [0, MAX_BURST_TIME]
-        int randomBurstTime = rand() % MAX_BURST_TIME;
+        int randomBurstTime = rand() % (MAX_BURST_TIME) + 1;
         // Intervalo [0, randomBurstTime-1]
-        int randomIoStartTime = rand() % (randomBurstTime - 1);
+        int randomIoStartTime = rand() % (randomBurstTime + 1);
         // Tipos de IO: 1 - disco, 2 - fita magnetica, 3 - impressora
         int randIoType = (rand() % NUMBER_OF_IO_TYPES) + 1;
         processes[i] = newProcess(randomArrivalTime, randomBurstTime, randomIoStartTime, randIoType);
@@ -50,7 +53,8 @@ int main(){
     
     //Monta tabela com resultados obtidos
     for(int i = 0; i < NUMBER_OF_PROCESSES; i++){
-       printf("\nProcesso [#%d] Tempo Chegada: %d Tempo Servico: %d Final Processo: %d TAT: %d Tempo de Espera: %d", i, processes[i]->arrivalTime, processes[i]->ioStartTime, processes[i]->endTime, processes[i]->turnaroundTime, processes[i]->waitingTime);
+        Process *p = processes[i];
+        printf("\nProcesso [PID %d]: Tempo Chegada: %d; Tempo da finalização: %d; TAT: %d; WT: %d", p->pid, p->arrivalTime, p->endTime, p->turnaroundTime, p->waitingTime);
     }
     printf("\n\n");
 
@@ -99,7 +103,7 @@ void checkIOWaitingProcess(Queue *q, Queue *priorityQueue){
             p->status = STATUS_READY;
             push(priorityQueue, p);
             pop(q);
-            printf("[t = %d] Process with PID %d has finished waiting for I/O.\n", t+1, p->pid);
+            printf("[t = %d] Process with PID %d has finished waiting for I/O.\n", t, p->pid);
         }
         else{
             if(p->ioBurstTimeRemaining > 0) p->ioBurstTimeRemaining -= 1;
@@ -142,7 +146,7 @@ void runExecutingProcess(){
 
         executingProcess->status = STATUS_WAITING;
         hasExecutingProcess = FALSE;
-        printf("[t = %d] Process with PID %d has requested I/O.\n", t+1, executingProcess->pid);
+        printf("[t = %d] Process with PID %d has requested I/O.\n", t, executingProcess->pid);
         return;
     }
 
@@ -150,8 +154,8 @@ void runExecutingProcess(){
     if(processHasTerminated){
         executingProcess->status = STATUS_TERMINATED;
         hasExecutingProcess = FALSE;
-        printf("[t = %d] Process with PID %d has terminated.\n", t+1, executingProcess->pid);
-        executingProcess->endTime = t + 1;
+        printf("[t = %d] Process with PID %d has terminated.\n", t, executingProcess->pid);
+        executingProcess->endTime = t;
         executingProcess->turnaroundTime = executingProcess->endTime - executingProcess->arrivalTime;
         executingProcess->waitingTime = executingProcess->turnaroundTime - executingProcess->cpuBurstTime;
     }
@@ -159,7 +163,7 @@ void runExecutingProcess(){
         executingProcess->status = STATUS_READY;
         push(lowPriorityQueue, executingProcess);
         hasExecutingProcess = FALSE;
-        printf("[t = %d] Process with PID %d was preempted.\n", t+1, executingProcess->pid);
+        printf("[t = %d] Process with PID %d was preempted.\n", t, executingProcess->pid);
     }
 }
 

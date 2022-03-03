@@ -22,5 +22,5 @@
 
 #define NUMBER_OF_PROCESSES 3
 
-#define MAX_BURST_TIME 10
-#define MAX_ARRIVAL_TIME 6
+#define MAX_BURST_TIME 7
+#define MAX_ARRIVAL_TIME 4
