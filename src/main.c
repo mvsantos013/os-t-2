@@ -33,9 +33,17 @@ int main(){
     printerQueue = newQueue();
     
     // Cria processos (arrivalTime, cpuBurstTime, ioStartTime, ioType).
-    processes[0] = newProcess(0, 9, 2, IO_TYPE_DISC);
-    processes[1] = newProcess(0, 4, 3, IO_TYPE_TAPE);
-    processes[2] = newProcess(0, 4, 3, IO_TYPE_PRINTER);
+    for (int i = 0; i < NUMBER_OF_PROCESSES; i++)
+    {
+        // Intervalo [0, MAX_BURST_TIME]
+        int randBurst = rand() % MAX_BURST_TIME;
+        // Como o ioStartTime não pode ser maior que cpuBurstTime,
+        // o intervalo da variavel ficará entre [0, randBurst-1]
+        int randStart = rand() % (randBurst - 1);
+        // Tipos de IO: 1 - disco, 2 - fita magnetica, 3 - impressora
+        int randIo = (rand() % MAX_IO_TYPES) + 1;
+        processes[i] = newProcess(i, randBurst, randStart, randIo);
+    }
 
     start();
     
