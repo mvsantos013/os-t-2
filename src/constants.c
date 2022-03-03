@@ -1,0 +1,22 @@
+#define MAX_QUEUE_SIZE 999
+
+#define TRUE 1
+#define FALSE 0
+
+#define STATUS_NULL 0
+#define STATUS_READY 1
+#define STATUS_RUNNING 2
+#define STATUS_WAITING 3
+#define STATUS_TERMINATED 4
+
+#define IO_TYPE_DISC 1
+#define IO_TYPE_TAPE 2
+#define IO_TYPE_PRINTER 3
+
+#define IO_TIME_DISC 2
+#define IO_TIME_TAPE 5
+#define IO_TIME_PRINTER 8
+
+#define QUANTUM 2
+
+#define NUMBER_OF_PROCESSES 3
