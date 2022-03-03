@@ -3,6 +3,8 @@
 ## Execução
 ```bash
 make start
+#or
+gcc -o main.out src/main.c -Wall && ./main.out 
 ```
 
 ### Integrantes
