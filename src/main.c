@@ -35,14 +35,15 @@ int main(){
     // Cria processos (arrivalTime, cpuBurstTime, ioStartTime, ioType).
     for (int i = 0; i < NUMBER_OF_PROCESSES; i++)
     {
+        // Intervalo [0, MAX_ARRIVAL_TIME]
+        int randomArrivalTime = rand() % MAX_ARRIVAL_TIME;
         // Intervalo [0, MAX_BURST_TIME]
-        int randBurst = rand() % MAX_BURST_TIME;
-        // Como o ioStartTime não pode ser maior que cpuBurstTime,
-        // o intervalo da variavel ficará entre [0, randBurst-1]
-        int randStart = rand() % (randBurst - 1);
+        int randomBurstTime = rand() % MAX_BURST_TIME;
+        // Intervalo [0, randomBurstTime-1]
+        int randomIoStartTime = rand() % (randomBurstTime - 1);
         // Tipos de IO: 1 - disco, 2 - fita magnetica, 3 - impressora
-        int randIo = (rand() % MAX_IO_TYPES) + 1;
-        processes[i] = newProcess(i, randBurst, randStart, randIo);
+        int randIoType = (rand() % NUMBER_OF_IO_TYPES) + 1;
+        processes[i] = newProcess(randomArrivalTime, randomBurstTime, randomIoStartTime, randIoType);
     }
 
     start();

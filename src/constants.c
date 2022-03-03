@@ -12,6 +12,7 @@
 #define IO_TYPE_DISC 1
 #define IO_TYPE_TAPE 2
 #define IO_TYPE_PRINTER 3
+#define NUMBER_OF_IO_TYPES 3
 
 #define IO_TIME_DISC 2
 #define IO_TIME_TAPE 5
@@ -22,4 +23,4 @@
 #define NUMBER_OF_PROCESSES 3
 
 #define MAX_BURST_TIME 10
-#define MAX_IO_TYPES 3
+#define MAX_ARRIVAL_TIME 6

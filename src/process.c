@@ -38,6 +38,11 @@ Process * newProcess(int arrivalTime, int cpuBurstTime, int ioStartTime, int ioT
         p-> ioBurstTimeRemaining = IO_TIME_TAPE;
     else if (ioType == IO_TYPE_PRINTER)
         p-> ioBurstTimeRemaining = IO_TIME_PRINTER;
-        
+    
+    printf("New Process created. ");
+    printf(
+        "PID: %d, Arrival Time: %d, CPU Burst Time: %d, I/O Start Time: %d, I/O Type: %d.\n", 
+        p->pid, arrivalTime, cpuBurstTime, ioStartTime, ioType
+    );
     return p;
 }
