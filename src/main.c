@@ -151,9 +151,9 @@ void runExecutingProcess(){
         executingProcess->status = STATUS_TERMINATED;
         hasExecutingProcess = FALSE;
         printf("[t = %d] Process with PID %d has terminated.\n", t+1, executingProcess->pid);
-        executingProcess->turnaroundTime = t + 1 - executingProcess->arrivalTime; 
-        executingProcess->waitingTime = t + 1 - executingProcess->arrivalTime - executingProcess->ioStartTime;
         executingProcess->endTime = t + 1;
+        executingProcess->turnaroundTime = executingProcess->endTime - executingProcess->arrivalTime;
+        executingProcess->waitingTime = executingProcess->turnaroundTime - executingProcess->cpuBurstTime;
     }
     else if(executingProcess->quantumRemaining == 0){
         executingProcess->status = STATUS_READY;
