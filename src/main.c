@@ -32,7 +32,7 @@ int main(){
     tapeQueue = newQueue();
     printerQueue = newQueue();
     
-    // Cria processos (arrivalTime, cpuBurstTime, ioBurstTime, ioStartTime, ioType).
+    // Cria processos (arrivalTime, cpuBurstTime, ioStartTime, ioType).
     processes[0] = newProcess(0, 9, 2, IO_TYPE_DISC);
     processes[1] = newProcess(0, 4, 3, IO_TYPE_TAPE);
     processes[2] = newProcess(0, 4, 3, IO_TYPE_PRINTER);
