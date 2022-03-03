@@ -20,3 +20,6 @@
 #define QUANTUM 2
 
 #define NUMBER_OF_PROCESSES 3
+
+#define MAX_BURST_TIME 10
+#define MAX_IO_TYPES 3
